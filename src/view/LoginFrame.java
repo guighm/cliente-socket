@@ -1,10 +1,9 @@
-package uea.trabalho.cliente.view;
+package view;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-import uea.trabalho.servidor.model.aluno.AlunoDAO;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.GridLayout;
@@ -23,6 +22,15 @@ public class LoginFrame extends JFrame{
     private JRadioButton tecnicoOption;
     private JButton loginButton;
     private ButtonGroup group;
+    private String request;
+
+    public String getRequest() {
+        return request;
+    }
+
+    public void setRequest(String request) {
+        this.request = request;
+    }
 
     public LoginFrame() {
         setTitle("Fazer Login");
@@ -59,15 +67,16 @@ public class LoginFrame extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 String login = loginField.getText().replace(" ", "").toLowerCase();
-                String senha = new String(passwordField.getPassword());
-                senha.replace(" ", "");
+                String senha = new String(passwordField.getPassword()).replace(" ", "");
                 if (alunoOption.isSelected()){
                     dispose();
-                    new AlunoDAO().autenticarAluno(login, senha);
+                    setRequest("4:%s:%s".formatted(login, senha));
                 } else if (professorOption.isSelected()) {
-                    JOptionPane.showMessageDialog(null, "PROFESSOR");
+                    dispose();
+                    setRequest("5:%s:%s".formatted(login, senha));
                 } else if (tecnicoOption.isSelected()) {
-                    JOptionPane.showMessageDialog(null, "TÉCNICO");
+                    dispose();
+                    setRequest("6:%s:%s".formatted(login, senha));
                 } else {
                     JOptionPane.showMessageDialog(null, "NENHUMA OPÇÃO SELECIONADA");
                 }

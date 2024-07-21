@@ -1,4 +1,4 @@
-package uea.trabalho.cliente.view;
+package view;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -8,14 +8,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
-
-import uea.trabalho.servidor.model.aluno.Aluno;
-import uea.trabalho.servidor.model.aluno.AlunoDAO;
-import uea.trabalho.servidor.model.professor.Professor;
-import uea.trabalho.servidor.model.professor.ProfessorDAO;
-import uea.trabalho.servidor.model.tecnico.Tecnico;
-import uea.trabalho.servidor.model.tecnico.TecnicoDAO;
-
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -34,6 +26,15 @@ public class CadastroFrame extends JFrame{
     private JRadioButton tecnicoOption;
     private JButton loginButton;
     private ButtonGroup group;
+    private String request;
+
+    public String getRequest() {
+        return request;
+    }
+
+    public void setRequest(String request) {
+        this.request = request;
+    }
 
     public CadastroFrame() {
         setTitle("Fazer Cadastro");
@@ -80,27 +81,24 @@ public class CadastroFrame extends JFrame{
 
                 String login = loginField.getText().replace(" ", "").toLowerCase();
                 String senha = new String(passwordField.getPassword());
-                senha.replace(" ", "");
-                String titulacao = titulacaoField.getText().replace(" ", "");
-                int anoDeIngresso = Integer.parseInt(ingressoField.getText());
-
+                senha = senha.replace(" ", "");
+                
                 if (alunoOption.isSelected()){
-
+                    
+                    String anoDeIngresso = ingressoField.getText().replace(" ", "");
                     dispose();
-                    Aluno aluno1 = new Aluno(login, senha, anoDeIngresso);
-                    new AlunoDAO().cadastrarAluno(aluno1);
-
+                    setRequest("1:%s:%s:%s".formatted(login, senha, anoDeIngresso));
+                    
                 } else if (professorOption.isSelected()) {
-
+                    
+                    String titulacao = titulacaoField.getText().replace(" ", "");
                     dispose();
-                    Professor professor1 = new Professor(login, senha, titulacao);
-                    new ProfessorDAO().cadastrarProfessor(professor1);
+                    setRequest("2:%s:%s:%s".formatted(login, senha, titulacao));
 
                 } else if (tecnicoOption.isSelected()) {
 
                     dispose();
-                    Tecnico tecnico1 = new Tecnico(login, senha);
-                    new TecnicoDAO().cadastrarTecnico(tecnico1);
+                    setRequest("3:%s:%s".formatted(login, senha));
                     
                 } else {
                     JOptionPane.showMessageDialog(null, "NENHUMA OPÇÃO SELECIONADA");
