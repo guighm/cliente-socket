@@ -10,6 +10,8 @@ import view.Janela;
 public class ClienteSocket {
     private static String request;
     private static String response;
+    public static String user;
+    public static String funcao;
 
     public static void main(String[] args) throws InterruptedException {
         try {
@@ -19,6 +21,11 @@ public class ClienteSocket {
             BufferedReader entrada = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             ObjectOutputStream saida = new ObjectOutputStream(connection.getOutputStream());
             
+            while (true) {
+                Janela.request = null;
+                saida.flush();
+                request = Janela.startFrame();
+            }
             do{
                 do {
                     Janela.request = null;
