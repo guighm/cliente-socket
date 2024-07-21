@@ -1,5 +1,8 @@
 package view;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
@@ -46,8 +49,6 @@ public class Janela {
             case 3:
                 return "SAIR";
             default:
-                JOptionPane.showMessageDialog(null, "DIGITE UMA OPÇÃO VÁLIDA!", "Erro", JOptionPane.ERROR_MESSAGE);
-                opcao = Integer.parseInt(JOptionPane.showInputDialog(texto));
                 return null;
         }
     }
@@ -62,17 +63,14 @@ public class Janela {
         int opcao = Integer.parseInt(JOptionPane.showInputDialog(texto));
         switch (opcao) {
             case 1:
-
-                return null;
+                return "CHAT:0:0";
             case 2:
-                return null;
+                request = tecnicoTarefasFrame(); 
+                return request;
             case 3:
-                return "SAIR";
+                return "SAIR:0:0";
             default:
-                JOptionPane.showMessageDialog(null, "DIGITE UMA OPÇÃO VÁLIDA!", "Erro", JOptionPane.ERROR_MESSAGE);
-                opcao = Integer.parseInt(JOptionPane.showInputDialog(texto));
                 return null;
-
     }
 
     }
@@ -90,22 +88,30 @@ public class Janela {
             int opcao = Integer.parseInt(JOptionPane.showInputDialog(texto));
             switch (opcao) {
                 case 1: 
-                    return null;
+                    return "7:0:0";
                 case 2: 
-                    return null;
+                    return "8:0:0";
                 case 3: 
-                    return null;
+                    return "9:0:0";
                 case 4: 
                     return null;
                 case 5: 
                     return null;
                 case 6: 
-                    return null;
+                    return "SAIR:0:0";
                 default:
-                    JOptionPane.showMessageDialog(null, "DIGITE UMA OPÇÃO VÁLIDA!", "Erro", JOptionPane.ERROR_MESSAGE);
-                    opcao = Integer.parseInt(JOptionPane.showInputDialog(texto));
                     return null;
         
     }
 }
+
+    public static void listagemFrame(String response) {
+        String texto = "";
+        String[] linhas = response.split(":");
+        ArrayList<String> novaLista = new ArrayList<>(Arrays.asList(linhas));
+        for (String linha : novaLista) {
+            texto += (linha + "\n");
+        }
+        JOptionPane.showMessageDialog(null, texto);
+    }
 }
