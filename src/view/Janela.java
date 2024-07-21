@@ -81,9 +81,8 @@ public class Janela {
             1 - Listar Alunos
             2 - Listar Professores
             3 - Listar Técnicos
-            4 - Visualizar Status dos Usuários
-            5 - Apagar conexão
-            6 - Sair
+            4 - Ver conexões
+            5 - Sair
             """;
             int opcao = Integer.parseInt(JOptionPane.showInputDialog(texto));
             switch (opcao) {
@@ -94,10 +93,8 @@ public class Janela {
                 case 3: 
                     return "9:0:0";
                 case 4: 
-                    return null;
+                    return "11:0:0";
                 case 5: 
-                    return null;
-                case 6: 
                     return "SAIR:0:0";
                 default:
                     return null;
@@ -113,5 +110,18 @@ public class Janela {
             texto += (linha + "\n");
         }
         JOptionPane.showMessageDialog(null, texto);
+    }
+
+    public static String killFrame(String response) {
+        String texto = "Qual conexão você quer fechar?\n";
+        String[] linhas = response.split(":");
+        ArrayList<String> novaLista = new ArrayList<>(Arrays.asList(linhas));
+        int i = 1;
+        for (String linha : novaLista) {
+            texto += (i + " - " + linha + "\n");
+            i++;
+        }
+        String conexao = JOptionPane.showInputDialog(texto);
+        return "13:%s:0".formatted(conexao);
     }
 }

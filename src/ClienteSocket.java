@@ -3,16 +3,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
-
-import view.AlunosFrame;
 import view.Janela;
-import view.ProfessoresFrame;
-import view.TecnicosFrame;
 
 
 public class ClienteSocket {
@@ -27,6 +19,7 @@ public class ClienteSocket {
             Socket connection = new Socket(host, 12345);
             BufferedReader entrada = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             ObjectOutputStream saida = new ObjectOutputStream(connection.getOutputStream());
+            user = "DESCONHECIDO";
             
             while (true) {
                 while (true) {
@@ -37,6 +30,8 @@ public class ClienteSocket {
                         if (request == null) {
                             JOptionPane.showMessageDialog(null, "DIGITE UMA OPÇÃO VÁLIDA!", "Erro", JOptionPane.ERROR_MESSAGE);
                         } else if (request.equals("SAIR")) {
+                            String aviso = user + " saiu do SERVIDOR";
+                            saida.writeObject("12:" + aviso + ":0");
                             System.exit(0);
                         } else {
                             break;
@@ -44,6 +39,7 @@ public class ClienteSocket {
                     }
                     while (true) {
                         saida.writeObject(request);
+                        saida.flush();
                         response = entrada.readLine();
                         JOptionPane.showMessageDialog(null, response, "RESPONSE", JOptionPane.INFORMATION_MESSAGE);
                         if (response.contains("logado") || response.contains("400")) {
@@ -51,6 +47,9 @@ public class ClienteSocket {
                         }
                     }
                     if (response.contains("logado")) {
+                        user = Cliente.pegarUser(request);
+                        String aviso = user + " entrou no CHAT";
+                        saida.writeObject("12:" + aviso + ":0");
                         break;
                     }
                 }
@@ -62,9 +61,19 @@ public class ClienteSocket {
                         if (request == null) {
                             JOptionPane.showMessageDialog(null, "DIGITE UMA OPÇÃO VÁLIDA!", "Erro", JOptionPane.ERROR_MESSAGE);
                         } else if (request.equals("SAIR:0:0")) {
+                            String aviso = user + " saiu do CHAT";
+                            saida.writeObject("12:" + aviso + ":0");
                             System.exit(0);
                         } else if (request.equals("CHAT:0:0")){
                             break;
+                        } else if (request.equals("11:0:0")){ 
+                            saida.writeObject(request);
+                            saida.flush();
+                            response = entrada.readLine();
+                            request = Janela.killFrame(response);
+                            saida.writeObject(request);
+                            saida.flush();
+
                         } else {
                             saida.writeObject(request);
                             saida.flush();
