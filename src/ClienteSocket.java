@@ -4,9 +4,6 @@ import java.io.InputStreamReader;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
-
-import view.ChatFrame;
 import view.Janela;
 
 public class ClienteSocket {
@@ -26,7 +23,6 @@ public class ClienteSocket {
             while (true) {  // tela inicial 
                 Janela.request = null;
                 request = Janela.startFrame();
-                System.out.println(request);
                 if (request == null) {
                     JOptionPane.showMessageDialog(null, "DIGITE UMA OPÇÃO VÁLIDA!", "Erro", JOptionPane.ERROR_MESSAGE);
                 } else if (request.equals("SAIR")) {
@@ -58,9 +54,6 @@ public class ClienteSocket {
                 Janela.request = null;
                 saida.flush();
                 request = Janela.tecnicoFrame();
-                System.out.println(
-                    request
-                );
                 if (request == null) {
                     JOptionPane.showMessageDialog(null, "DIGITE UMA OPÇÃO VÁLIDA!", "Erro", JOptionPane.ERROR_MESSAGE);
                 } else if (request.contains("SAIR")){
