@@ -16,10 +16,23 @@ public class ChatFrame extends JFrame{
     private JButton sendButton;
     private JScrollPane scrollPane;
     private String user;
-    private static String mensagem;
+    private static String userMessage;
+    private static String request;
 
-    public static String getMensagem() {
-        return mensagem;
+    public static String getUserMessage() {
+        return userMessage;
+    }
+
+    public static void setUserMessage(String userMessage) {
+        ChatFrame.userMessage = userMessage;
+    }
+
+    public static String getRequest() {
+        return request;
+    }
+
+    public static void setRequest(String request) {
+        ChatFrame.request = request;
     }
 
     public ChatFrame(String lista, String user) {
@@ -51,6 +64,7 @@ public class ChatFrame extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 sendMessage();
+                setRequest("11:%s:0".formatted(getUserMessage()));
             }
         });
 
@@ -58,6 +72,7 @@ public class ChatFrame extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 sendMessage();
+                setRequest("11:%s:0".formatted(getUserMessage()));
             }
         }
         );
@@ -66,10 +81,11 @@ public class ChatFrame extends JFrame{
     public void sendMessage() {
         String mensagem = messageField.getText().trim();
         if (!mensagem.isEmpty()) {
-            String novaMensagem = "%s: ".formatted(this.user) + mensagem;
+            String novaMensagem = "%s -> ".formatted(this.user) + mensagem;
             chatArea.append(novaMensagem  + "\n");
             messageField.setText("");
             mensagem = novaMensagem;
+            setUserMessage(novaMensagem);
         }
     }
     

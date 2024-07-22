@@ -123,4 +123,18 @@ public class Janela {
         conexao = conexao.replace(" ", "");
         return conexao;
     }
+
+    public static String chat(String conversas, String user) {
+        ChatFrame chatFrame = new ChatFrame(conversas, user);
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                chatFrame.setVisible(true);
+            }
+        });
+        while (request == null) {
+            request = ChatFrame.getRequest();
+        }
+        return request;
+    }
 }

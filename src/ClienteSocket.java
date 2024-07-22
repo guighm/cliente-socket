@@ -89,39 +89,23 @@ public class ClienteSocket {
                 }
             }
         }
-        for (int i = 0; i < 2; i++) {
-            saida.flush();
-            saida.writeObject("10:0:0");
-            saida.flush();
-            response = entrada.readLine();
-        }
-        String conversas = Cliente.pegarConversas(response);
-        System.out.println(conversas);
-        final ChatFrame chat = new ChatFrame(conversas, user);
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                chat.setVisible(true);
+        while (true) {
+            for (int i = 0; i < 2; i++) {
+                saida.flush();
+                saida.writeObject("10:0:0");
+                saida.flush();
+                response = entrada.readLine();
             }
-        });
+            String conversas = Cliente.pegarConversas(response);
+            System.out.println(conversas);
+            request = JOptionPane.showInputDialog("Digite sua mensagem, ou digite 10 para sair:");
+            saida.flush();
+            String pedaco = "%s -> %s".formatted(user, request);
+            saida.writeObject("11:%s:0".formatted(pedaco));
+            for (int i = 0; i < 10; i++) {
+                saida.flush();
+                response = entrada.readLine();
+            }
+        }
 }
 }
-
-                //     if (response != null) {
-                //         System.out.println("CONVERSAS: " + response);
-                //         String conversas = Cliente.pegarConversas(response);
-                //         System.out.println(conversas);
-                //         String texto = "Digite sua mensagem, ou digite 1 para sair";
-                //         String mensagem = JOptionPane.showInputDialog(null, texto, "CHAT", JOptionPane.INFORMATION_MESSAGE);
-                //         saida.writeObject("11:%s:0".formatted(mensagem));
-                //         saida.flush();
-                //         String chat = "";
-                //         String[] linhas = response.split(":");
-                //         ArrayList<String> novaLista = new ArrayList<>(Arrays.asList(linhas));
-                //         for (String linha : novaLista) {
-                //             chat += (linha + "\n");
-                //         }
-                //         System.out.println(chat);
-                //     }
-                // }
-
