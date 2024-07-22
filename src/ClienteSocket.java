@@ -96,7 +96,7 @@ public class ClienteSocket {
                 String aviso = user + " saiu do CHAT";
                     saida.writeObject("12:" + aviso + ":0");
                     System.exit(0);
-            }
+            }e
             String pedaco = "%s -> %s".formatted(user, request);
             System.out.println(pedaco);
             saida.flush();
