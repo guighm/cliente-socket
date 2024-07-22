@@ -50,7 +50,7 @@ public class ClienteSocket {
             }
         }
 
-        if (response.equals("200 - Técnico logado")) { // janela do técnico
+        if (response.equals("200 - Tecnico logado")) { // janela do técnico
             while (true) {
                 Janela.request = null;
                 saida.flush();
