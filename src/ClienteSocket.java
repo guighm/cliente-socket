@@ -4,6 +4,9 @@ import java.io.InputStreamReader;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+
+import view.ChatFrame;
 import view.Janela;
 
 public class ClienteSocket {
@@ -66,13 +69,12 @@ public class ClienteSocket {
                     System.exit(0);
                 } else if (request.contains("CHAT")) {
                     break;
-                } else if (request.equals("11:0:0")) {
+                } else if (request.equals("13:0:0")) {
                     for (int i = 0; i < 2; i++) {
                         saida.writeObject(request);
                         saida.flush();
                         response = entrada.readLine();
                     }
-                    JOptionPane.showInputDialog(null);
                     request = Janela.killFrame(response);
                     saida.writeObject("14:" + request + ":0");
                     saida.flush();
@@ -87,21 +89,24 @@ public class ClienteSocket {
                 }
             }
         }
-
-        while (true) { // chat
-            JOptionPane.showMessageDialog(null, "NÃO É TÉCNICO", "RESPONSE", JOptionPane.INFORMATION_MESSAGE);
+        for (int i = 0; i < 2; i++) {
+            saida.flush();
+            saida.writeObject("10:0:0");
+            saida.flush();
+            response = entrada.readLine();
         }
+        String conversas = Cliente.pegarConversas(response);
+        System.out.println(conversas);
+        final ChatFrame chat = new ChatFrame(conversas, user);
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                chat.setVisible(true);
+            }
+        });
 }
 }
 
-
-
-            //         }
-            //     }
-                // while (true) {
-                //     saida.flush();
-                //     saida.writeObject("10:0:0");
-                //     response = entrada.readLine();
                 //     if (response != null) {
                 //         System.out.println("CONVERSAS: " + response);
                 //         String conversas = Cliente.pegarConversas(response);

@@ -119,9 +119,8 @@ public class Janela {
             texto += (linha + "\n");
         }
         texto += "QUAL CONEXÃO VOCÊ QUER FECHAR?";
-        //String conexao = JOptionPane.showInputDialog(null, texto);
-        //conexao = conexao.replace(" ", "");
-        //return conexao;
-        return null;
+        String conexao = JOptionPane.showInputDialog(null, texto);
+        conexao = conexao.replace(" ", "");
+        return conexao;
     }
 }
