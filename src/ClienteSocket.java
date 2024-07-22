@@ -19,10 +19,6 @@ public class ClienteSocket {
         String request;    
         String response;
 
-        String aviso = user + " entrou no servidor";
-        saida.writeObject("15:" + aviso + ":0");
-        saida.flush();
-
         while (true) {
             while (true) {  // tela inicial 
                 Janela.request = null;
@@ -30,7 +26,7 @@ public class ClienteSocket {
                 if (request == null) {
                     JOptionPane.showMessageDialog(null, "DIGITE UMA OPÇÃO VÁLIDA!", "Erro", JOptionPane.ERROR_MESSAGE);
                 } else if (request.equals("SAIR")) {
-                    aviso = user + " saiu do SERVIDOR";
+                    String aviso = user + " saiu do SERVIDOR";
                     saida.writeObject("12:" + aviso + ":0");
                     System.exit(0);
                 } else {
@@ -47,7 +43,7 @@ public class ClienteSocket {
 
             if (response.contains("logado")) {
                 user = Cliente.pegarUser(request);
-                aviso = user + " entrou no CHAT";
+                String aviso = user + " entrou no CHAT";
                 saida.writeObject("12:" + aviso + ":0");
                 break;
             }
@@ -61,7 +57,7 @@ public class ClienteSocket {
                 if (request == null) {
                     JOptionPane.showMessageDialog(null, "DIGITE UMA OPÇÃO VÁLIDA!", "Erro", JOptionPane.ERROR_MESSAGE);
                 } else if (request.contains("SAIR")){
-                    aviso = user + " saiu do CHAT";
+                    String aviso = user + " saiu do CHAT";
                     saida.writeObject("12:" + aviso + ":0");
                     System.exit(0);
                 } else if (request.contains("CHAT")) {
@@ -103,7 +99,7 @@ public class ClienteSocket {
             saida.flush();
             response = entrada.readLine();
             if (request.equals("SAIR")) {
-                aviso = user + " saiu do CHAT";
+                String aviso = user + " saiu do CHAT";
                     saida.writeObject("12:" + aviso + ":0");
                     System.exit(0);
             }
