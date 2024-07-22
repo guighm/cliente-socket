@@ -93,7 +93,7 @@ public class Janela {
                 case 3: 
                     return "9:0:0";
                 case 4: 
-                    return "11:0:0";
+                    return null;
                 case 5: 
                     return "SAIR:0:0";
                 default:
