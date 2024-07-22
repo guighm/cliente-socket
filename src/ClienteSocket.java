@@ -89,23 +89,27 @@ public class ClienteSocket {
                 }
             }
         }
-        while (true) {
-            for (int i = 0; i < 2; i++) {
-                saida.flush();
-                saida.writeObject("10:0:0");
-                saida.flush();
-                response = entrada.readLine();
-            }
-            String conversas = Cliente.pegarConversas(response);
-            System.out.println(conversas);
-            request = JOptionPane.showInputDialog("Digite sua mensagem, ou digite 10 para sair:");
+        for (int i = 0; i < 2; i++) {
             saida.flush();
+            saida.writeObject("10:0:0");
+            saida.flush();
+            response = entrada.readLine();
+        }
+        String conversas = Cliente.pegarConversas(response);
+        System.out.println(conversas);
+        while (true) {
+            request = JOptionPane.showInputDialog("Digite sua mensagem, ou digite SAIR para sair:");
             String pedaco = "%s -> %s".formatted(user, request);
+            System.out.println(pedaco);
+            saida.flush();
             saida.writeObject("11:%s:0".formatted(pedaco));
-            for (int i = 0; i < 10; i++) {
-                saida.flush();
-                response = entrada.readLine();
+            saida.flush();
+            response = entrada.readLine();
+            if (request.equals("SAIR")) {
+                String aviso = user + " saiu do CHAT";
+                    saida.writeObject("12:" + aviso + ":0");
+                    System.exit(0);
+            }
             }
         }
-}
 }
