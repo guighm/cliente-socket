@@ -92,17 +92,17 @@ public class ClienteSocket {
         System.out.println(conversas);
         while (true) {
             request = JOptionPane.showInputDialog("Digite sua mensagem, ou digite SAIR para sair:");
+            if (request.equals("SAIR")) {
+                String aviso = user + " saiu do CHAT";
+                    saida.writeObject("12:" + aviso + ":0");
+                    System.exit(0);
+            }
             String pedaco = "%s -> %s".formatted(user, request);
             System.out.println(pedaco);
             saida.flush();
             saida.writeObject("11:%s:0".formatted(pedaco));
             saida.flush();
             response = entrada.readLine();
-            if (request.equals("SAIR")) {
-                String aviso = user + " saiu do CHAT";
-                    saida.writeObject("12:" + aviso + ":0");
-                    System.exit(0);
-            }
             }
         }
 }
