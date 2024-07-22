@@ -2,7 +2,6 @@ package view;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
@@ -93,7 +92,7 @@ public class Janela {
                 case 3: 
                     return "9:0:0";
                 case 4: 
-                    return null;
+                    return "13:0:0";
                 case 5: 
                     return "SAIR:0:0";
                 default:
@@ -113,15 +112,16 @@ public class Janela {
     }
 
     public static String killFrame(String response) {
-        String texto = "Qual conexão você quer fechar?\n";
+        String texto = "";
         String[] linhas = response.split(":");
         ArrayList<String> novaLista = new ArrayList<>(Arrays.asList(linhas));
-        int i = 1;
         for (String linha : novaLista) {
-            texto += (i + " - " + linha + "\n");
-            i++;
+            texto += (linha + "\n");
         }
-        String conexao = JOptionPane.showInputDialog(texto);
-        return "13:%s:0".formatted(conexao);
+        texto += "QUAL CONEXÃO VOCÊ QUER FECHAR?";
+        //String conexao = JOptionPane.showInputDialog(null, texto);
+        //conexao = conexao.replace(" ", "");
+        //return conexao;
+        return null;
     }
 }

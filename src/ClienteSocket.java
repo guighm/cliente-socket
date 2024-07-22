@@ -20,7 +20,7 @@ public class ClienteSocket {
         String response;
 
         while (true) {
-            while (true) {
+            while (true) {  // tela inicial 
                 Janela.request = null;
                 request = Janela.startFrame();
                 System.out.println(request);
@@ -34,15 +34,14 @@ public class ClienteSocket {
                     break;
                 }
             }
-            while (true) {
+            while (true) { // tela com a response
                 saida.writeObject(request);
                 saida.flush();
                 response = entrada.readLine();
                 JOptionPane.showMessageDialog(null, response, "RESPONSE", JOptionPane.INFORMATION_MESSAGE);
-                if (response.contains("cadastrado") || response.contains("400")) {
-                    break;        
-                }
+                break;        
             }
+
             if (response.contains("logado")) {
                 user = Cliente.pegarUser(request);
                 String aviso = user + " entrou no CHAT";
@@ -50,43 +49,53 @@ public class ClienteSocket {
                 break;
             }
         }
+
+        if (response.equals("200 - Técnico logado")) { // janela do técnico
+            while (true) {
+                Janela.request = null;
+                saida.flush();
+                request = Janela.tecnicoFrame();
+                System.out.println(
+                    request
+                );
+                if (request == null) {
+                    JOptionPane.showMessageDialog(null, "DIGITE UMA OPÇÃO VÁLIDA!", "Erro", JOptionPane.ERROR_MESSAGE);
+                } else if (request.contains("SAIR")){
+                    String aviso = user + " saiu do CHAT";
+                    saida.writeObject("12:" + aviso + ":0");
+                    System.exit(0);
+                } else if (request.contains("CHAT")) {
+                    break;
+                } else if (request.equals("11:0:0")) {
+                    for (int i = 0; i < 2; i++) {
+                        saida.writeObject(request);
+                        saida.flush();
+                        response = entrada.readLine();
+                    }
+                    JOptionPane.showInputDialog(null);
+                    request = Janela.killFrame(response);
+                    saida.writeObject("14:" + request + ":0");
+                    saida.flush();
+                } else {
+                    for (int i = 0; i < 2; i++) {
+                        saida.writeObject(request);
+                        saida.flush();
+                        response = entrada.readLine();
+                    }
+                    Janela.listagemFrame(response);
+                    saida.flush();
+                }
+            }
+        }
+
+        while (true) { // chat
+            JOptionPane.showMessageDialog(null, "NÃO É TÉCNICO", "RESPONSE", JOptionPane.INFORMATION_MESSAGE);
+        }
 }
 }
 
-            //     if (response.contains("logado")) {
-            //         user = Cliente.pegarUser(request);
-            //         String aviso = user + " entrou no CHAT";
-            //         saida.writeObject("12:" + aviso + ":0");
-            //         break;
-            //     }
 
-            // if (response.equals("200 - Técnico logado")) {
-            //     while (true) {
-            //         Janela.request = null;
-            //         saida.flush();
-            //         request = Janela.tecnicoFrame();
-            //         if (request == null) {
-            //             JOptionPane.showMessageDialog(null, "DIGITE UMA OPÇÃO VÁLIDA!", "Erro", JOptionPane.ERROR_MESSAGE);
-            //         } else if (request.equals("SAIR:0:0")) {
-            //             String aviso = user + " saiu do CHAT";
-            //             saida.writeObject("12:" + aviso + ":0");
-            //             System.exit(0);
-            //         } else if (request.equals("CHAT:0:0")){
-            //             break;
-            //         } else if (request.equals("11:0:0")){ 
-            //             saida.writeObject(request);
-            //             saida.flush();
-            //             response = entrada.readLine();
-            //             request = Janela.killFrame(response);
-            //             saida.writeObject(request);
-            //             saida.flush();
 
-            //         }
-            //         saida.writeObject(request);
-            //         saida.flush();
-            //         response = entrada.readLine();
-            //         Janela.listagemFrame(response);
-            //             }
             //         }
             //     }
                 // while (true) {
