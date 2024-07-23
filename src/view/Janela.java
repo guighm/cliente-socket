@@ -92,7 +92,7 @@ public class Janela {
                 case 3: 
                     return "9:0:0";
                 case 4: 
-                    return "13:0:0";
+                    return "10:0:0";
                 case 5: 
                     return "SAIR:0:0";
                 default:
@@ -118,7 +118,7 @@ public class Janela {
         for (String linha : novaLista) {
             texto += (linha + "\n");
         }
-        texto += "Qual conexão você quer fechar?";
+        texto += "Qual conexão você quer fechar? (ou digite SAIR para sair)";
         String conexao = JOptionPane.showInputDialog(null, texto);
         conexao = conexao.replace(" ", "");
         return conexao;

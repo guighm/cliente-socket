@@ -40,6 +40,7 @@ public class ChatClient {
             }
 
             if (response.contains("logado")) {
+                user = Cliente.pegarUser(request);
                 break;
             }
         }
@@ -55,61 +56,58 @@ public class ChatClient {
                     System.exit(0);
                 } else if (request.contains("CHAT")) {
                     break;
-                } else if (request.equals("13:0:0")) {
-                    for (int i = 0; i < 2; i++) {
-                        saida.println(request);
-                        saida.flush();
-                        response = entrada.readLine();
-                    }
+                } else if (request.equals("10:0:0")) {
+                    saida.println(request);
+                    saida.flush();
+                    response = entrada.readLine();
                     request = Janela.killFrame(response);
                     if (request.contains("SAIR")) {
-                        System.exit(0);
+                        continue;
                     }
-                    saida.println("14:" + request + ":0");
+                    saida.println("11:" + request + ":0");
                     saida.flush();
                 } else {
                     saida.println(request);
                     saida.flush();
                     response = entrada.readLine();
-                    }
+                    System.out.println(response);
                     Janela.listagemFrame(response);
                     saida.flush();
+                    }
                 }
             }
 
-        user = Cliente.pegarUser(request);
-        String aviso = user + " entrou no CHAT";
-        saida.println("12:" + aviso + ":0");
-        
+        saida.println("13:" + user + ":0");
+        saida.flush();
+        request = "12:0:0";
+        saida.println(request);
+        saida.flush();
+        response = entrada.readLine();
+        String conversas = Cliente.pegarConversas(response);
+        System.out.println(conversas);
+        String texto = """
+        A seguir, digite sua mensagem!!
+        Para sair, digite 1
+        Para ver a lista de usuários, digite 2
+        """;
         while (true) { // chat
-            JOptionPane.showMessageDialog(null, "NÃO É TÉCNICO", "RESPONSE", JOptionPane.INFORMATION_MESSAGE);
+            String mensagem = JOptionPane.showInputDialog(null, texto, user, JOptionPane.INFORMATION_MESSAGE);
+            if (mensagem.equals("1")) {
+                saida.println("14:" + user + ":0");
+                saida.flush();
+                System.exit(0);
+            } else if (mensagem.equals("2")) {
+                saida.println("15:0:0");
+                saida.flush();
+                response = entrada.readLine();
+                Janela.listagemFrame(response);
+            } else {
+                String mensagemChat = "%s -> %s".formatted(user, mensagem);
+                saida.println("16:%s:0".formatted(mensagemChat));
+                saida.flush();
+                response = entrada.readLine();
+                System.out.println(response);
+            }
         }
+    }
 }
-}
-
-
-
-            //         }
-            //     }
-                // while (true) {
-                //     saida.flush();
-                //     saida.writeObject("10:0:0");
-                //     response = entrada.readLine();
-                //     if (response != null) {
-                //         System.out.println("CONVERSAS: " + response);
-                //         String conversas = Cliente.pegarConversas(response);
-                //         System.out.println(conversas);
-                //         String texto = "Digite sua mensagem, ou digite 1 para sair";
-                //         String mensagem = JOptionPane.showInputDialog(null, texto, "CHAT", JOptionPane.INFORMATION_MESSAGE);
-                //         saida.writeObject("11:%s:0".formatted(mensagem));
-                //         saida.flush();
-                //         String chat = "";
-                //         String[] linhas = response.split(":");
-                //         ArrayList<String> novaLista = new ArrayList<>(Arrays.asList(linhas));
-                //         for (String linha : novaLista) {
-                //             chat += (linha + "\n");
-                //         }
-                //         System.out.println(chat);
-                //     }
-                // }
-
