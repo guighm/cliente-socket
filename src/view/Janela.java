@@ -118,7 +118,7 @@ public class Janela {
         for (String linha : novaLista) {
             texto += (linha + "\n");
         }
-        texto += "QUAL CONEXÃO VOCÊ QUER FECHAR?";
+        texto += "Qual conexão você quer fechar?";
         String conexao = JOptionPane.showInputDialog(null, texto);
         conexao = conexao.replace(" ", "");
         return conexao;

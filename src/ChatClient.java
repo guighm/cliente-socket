@@ -23,12 +23,9 @@ public class ChatClient {
             while (true) {  // tela inicial 
                 Janela.request = null;
                 request = Janela.startFrame();
-                System.out.println(request);
                 if (request == null) {
                     JOptionPane.showMessageDialog(null, "DIGITE UMA OPÇÃO VÁLIDA!", "Erro", JOptionPane.ERROR_MESSAGE);
                 } else if (request.equals("SAIR")) {
-                    String aviso = user + " saiu do SERVIDOR";
-                    saida.println("12:" + aviso + ":0");
                     System.exit(0);
                 } else {
                     break;
@@ -52,24 +49,18 @@ public class ChatClient {
                 Janela.request = null;
                 saida.flush();
                 request = Janela.tecnicoFrame();
-                System.out.println(
-                    request
-                );
                 if (request == null) {
                     JOptionPane.showMessageDialog(null, "DIGITE UMA OPÇÃO VÁLIDA!", "Erro", JOptionPane.ERROR_MESSAGE);
                 } else if (request.contains("SAIR")){
-                    String aviso = user + " saiu do CHAT";
-                    saida.println("12:" + aviso + ":0");
                     System.exit(0);
                 } else if (request.contains("CHAT")) {
                     break;
-                } else if (request.equals("11:0:0")) {
+                } else if (request.equals("13:0:0")) {
                     for (int i = 0; i < 2; i++) {
                         saida.println(request);
                         saida.flush();
                         response = entrada.readLine();
                     }
-                    JOptionPane.showInputDialog(null);
                     request = Janela.killFrame(response);
                     saida.println("14:" + request + ":0");
                     saida.flush();
