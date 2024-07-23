@@ -62,6 +62,9 @@ public class ChatClient {
                         response = entrada.readLine();
                     }
                     request = Janela.killFrame(response);
+                    if (request.contains("SAIR")) {
+                        System.exit(0);
+                    }
                     saida.println("14:" + request + ":0");
                     saida.flush();
                 } else {
